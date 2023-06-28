@@ -36,5 +36,3 @@ build/
 /.mvn/wrapper/maven-wrapper.jar
 /.mvn/wrapper/maven-wrapper.properties
 
-### Sensitive Data ###
-src/main/resources/application.properties

@@ -3,6 +3,8 @@ package mira.space.tacos.controllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import mira.space.tacos.models.TacoOrder;
+import mira.space.tacos.repositories.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,12 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
     @GetMapping("/current")
     public String orderForm() {
         return "orderForm";
@@ -30,7 +38,7 @@ public class OrderController {
             return "orderForm";
         }
 
-        log.info("Order submitted: {}", order);
+        orderRepository.save(order);
         status.setComplete();
 
         return "redirect:/";
